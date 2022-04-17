@@ -1,9 +1,12 @@
-import express from 'express'
-import cors from 'cors'
-import helmet from 'helmet'
-import bodyParser from 'body-parser'
-import Controller from './interfaces/controller.interface'
-import errorMiddleware from './middlewares/error.middleware';
+import express from "express"
+import cors from "cors"
+import helmet from "helmet"
+import bodyParser from "body-parser"
+import morgan from "morgan"
+import fs from "fs"
+import path from "path"
+import Controller from "./interfaces/controller.interface"
+import errorMiddleware from "./middlewares/error.middleware"
 
 class App {
   public app: express.Application
@@ -22,8 +25,13 @@ class App {
   }
 
   private initializeMiddlewares() {
+    const accessLogStream = fs.createWriteStream(
+      path.join(__dirname, "logs/access.log"),
+      { flags: "a" }
+    )
     this.app.use(helmet())
     this.app.use(cors())
+    this.app.use(morgan("combined", { stream: accessLogStream }))
     this.app.use(bodyParser.json())
   }
 
@@ -33,7 +41,7 @@ class App {
 
   private initializeControllers(controllers: Controller[]) {
     controllers.forEach((controller) => {
-      this.app.use('/', controller.router)
+      this.app.use("/", controller.router)
     })
   }
 }
