@@ -8,7 +8,7 @@ type CreateInput = {
 }
 
 export const getAllPosts = async () => prisma.post.findMany()
-export const getPostById = (id: number) =>
+export const getPostById = async (id: number) =>
   prisma.post.findUnique({
     where: {
       id,

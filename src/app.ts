@@ -5,7 +5,7 @@ import bodyParser from "body-parser"
 import morgan from "morgan"
 import fs from "fs"
 import path from "path"
-import Controller from "./interfaces/controller.interface"
+import { Controller } from "./interfaces"
 import errorMiddleware from "./middlewares/error.middleware"
 
 class App {
