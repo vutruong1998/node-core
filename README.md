@@ -1,11 +1,19 @@
 Run docker
-`docker-compose up -d`
+```sh
+docker-compose up -d
+```
 
 Copy default.env to .env
-`cp default.env .env`
+```sh
+cp default.env .env
+```
 
 Migrate database
-`yarn migrate`
+```sh
+yarn migrate
+```
 
 Generate prisma
-`yarn postinstall`
+```sh
+yarn postinstall
+```
