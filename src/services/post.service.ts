@@ -1,11 +1,20 @@
-import Post from "../interfaces/post.interface";
+import { PrismaClient } from "@prisma/client"
 
-const posts: Post[] = [
-  {
-    id: 1,
-    name: "Post 1",
-  },
-]
+const prisma = new PrismaClient()
 
-export const getAllPosts = () => posts
-export const getPostById = (id: number) => posts.find((post) => post.id === id)
+type CreateInput = {
+  [key: string]: any
+  title: string
+}
+
+export const getAllPosts = async () => prisma.post.findMany()
+export const getPostById = (id: number) =>
+  prisma.post.findUnique({
+    where: {
+      id,
+    },
+  })
+export const createPost = async (body: CreateInput) =>
+  prisma.post.create({
+    data: body,
+  })
