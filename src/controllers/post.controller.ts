@@ -1,24 +1,10 @@
-import express, { NextFunction, Request, Response } from 'express'
-import { getAllPosts, getPostById, createPost } from '../services/post.service'
-import HttpException from "../exceptions/HttpException";
-import { Post } from '../interfaces'
+import { NextFunction, Request, Response } from 'express'
+import { getAllPosts, getPostById, createPost } from '@/services/post.service'
+import HttpException from "@/exceptions/HttpException";
 
 class PostController {
-  public path = '/posts'
-  public router = express.Router()
-
-  constructor() {
-    this.intializeRoutes()
-  }
-
-  public intializeRoutes() {
-    this.router.get(this.path, this.getAllPosts)
-    this.router.get(`${this.path}/:id`, this.getPostById)
-    this.router.post(`${this.path}`, this.createPost)
-  }
-
   public getAllPosts = async (request: Request, response: Response) => {
-    const posts: Post[] = await getAllPosts()
+    const posts = await getAllPosts()
     return response.send(posts)
   }
 
@@ -26,7 +12,7 @@ class PostController {
     const { id } = request.params
     const post = await getPostById(Number(id))
     if (!post) {
-      return next(new HttpException(404, `Post with id ${id} not found`))
+      return next(new HttpException(404, 'Post not found'))
     }
     return response.send(post)
   }

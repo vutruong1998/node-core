@@ -17,3 +17,13 @@ Generate prisma
 ```sh
 yarn postinstall
 ```
+
+How to run this node app?
+```sh
+yarn serve
+```
+
+To bundle
+```sh
+yarn build
+```
